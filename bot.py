@@ -5,7 +5,7 @@ from telegram import Update
 from telegram.ext import Application, MessageHandler, CommandHandler, filters, ContextTypes
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
-TARGET_LANGUAGE    = "bn"  # বাংলা
+TARGET_LANGUAGE = "bn"
 
 logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -19,8 +19,7 @@ def translate_text(text):
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "🌐 *অনুবাদ বট চালু আছে!*\n\n✅ যেকোনো মেসেজ বা চ্যানেল পোস্ট Forward করুন\n_Google Translate দ্বারা চালিত_ ✨",
-        parse_mode="Markdown"
+        "🌐 অনুবাদ বট চালু আছে!\n\nযেকোনো মেসেজ বা চ্যানেল পোস্ট Forward করুন।"
     )
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -33,7 +32,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     status_msg = await message.reply_text("⏳ অনুবাদ করছি...")
     translated = translate_text(text)
     if translated:
-        await status_msg.edit_text(f"🌐 *বাংলা অনুবাদ:*\n\n{translated}", parse_mode="Markdown")
+        await status_msg.edit_text(f"🌐 বাংলা অনুবাদ:\n\n{translated}")
     else:
         await status_msg.edit_text("❌ অনুবাদ করতে সমস্যা হয়েছে।")
 
@@ -42,16 +41,8 @@ def main():
     app.add_handler(CommandHandler("start", start_command))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.add_handler(MessageHandler(filters.CAPTION & ~filters.COMMAND, handle_message))
-    logger.info("🤖 বট চালু হচ্ছে... (Google Translate)")
+    logger.info("বট চালু হচ্ছে...")
     app.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
 
 if __name__ == "__main__":
     main()
-```
-
----
-
-এরপর `requirements.txt` ও বদলান:
-```
-python-telegram-bot==21.6
-deep-translator==1.11.4
