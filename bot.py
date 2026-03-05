@@ -91,16 +91,15 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     app = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
-
     app.add_handler(CommandHandler("start", start_command))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.add_handler(MessageHandler(filters.CAPTION & ~filters.COMMAND, handle_message))
-
     logger.info("🤖 বট চালু হচ্ছে... (Gemini AI)")
-app.run_polling(
-    allowed_updates=Update.ALL_TYPES,
-    drop_pending_updates=True
-)
+    app.run_polling(    # ✅ ভেতরে আছে
+        allowed_updates=Update.ALL_TYPES,
+        drop_pending_updates=True
+    )
+
 
 if __name__ == "__main__":
     main()
