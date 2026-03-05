@@ -14,7 +14,7 @@ def translate_text(text):
         url = "https://api.mymemory.translated.net/get"
         params = {
             "q": text,
-            "langpair": "en|bn",
+            "langpair": "autodetect|bn",
             "de": "translator@gmail.com"
         }
         response = requests.get(url, params=params, timeout=10)
