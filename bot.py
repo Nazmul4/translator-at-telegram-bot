@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 # Gemini সেটআপ
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-1.5-flash")  # ফ্রি ও দ্রুত
+model = genai.GenerativeModel("gemini-2.0-flash-lite")  # ফ্রি ও দ্রুত
 
 
 def translate_with_gemini(text: str) -> str:
